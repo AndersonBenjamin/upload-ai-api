@@ -38,18 +38,19 @@ export async function generateAICompletionRoute(app: FastifyInstance) {
       messages: [
         { role: 'user', content: promptMessage },
       ],
+      stream: true
     })
 
-    return response?.choices[0]?.message?.content
+    //return response?.choices[0]?.message?.content
 
-    // const stream = OpenAIStream(response)
+    const stream = OpenAIStream(response)
 
-    // streamToResponse(stream, reply.raw, { // raw retorna a referência da resposta nativa do node
+     streamToResponse(stream, reply.raw, { // raw retorna a referência da resposta nativa do node
     //   // por estar usando a resposta interna do node, é necessário fazer a configuração do cors de forma manual
-    //   headers: {
-    //     'Access-Control-Allow-Origin': '*',
-    //     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-    //   },
-    // })
+       headers: {
+         'Access-Control-Allow-Origin': '*',
+         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+       },
+     })
   })
 }
